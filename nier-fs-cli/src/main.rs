@@ -18,7 +18,6 @@ fn main() {
     output_path.push("output");
 
     let config = Config::parse();
-    println!("{:#?}", config.path);
 
     let mut file = File::open(config.path).unwrap_or_else(|error| {
         panic!("Problem opening the input file: {:?}", error);

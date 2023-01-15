@@ -1,3 +1,4 @@
+// Based on .bt by Kerilk (bayonetta_tools)
 /*
 struct {
     char    id[4];
@@ -33,13 +34,6 @@ fn parse_names<R: Read + Seek>(reader: &mut R, _ro: &ReadOptions, args: (u32, u3
     Ok(result)
 }
 
-// Dumps rest of data until EOF into DAT.data
-fn parse_data<R: Read + Seek>(reader: &mut R, _ro: &ReadOptions, _: ()) -> BinResult<Vec<u8>>
-{
-    let mut data: Vec<u8> = Vec::new();
-    Ok(data)
-}
-
 #[binrw]
 #[br(little)]
 #[br(magic = b"DAT\0")]
@@ -53,14 +47,6 @@ pub struct Metadata {
     _padding: u32
 }
 
-// binrw meme
-// #[binrw]
-// #[br(little, import { count: u32, length: u32 } )]
-// pub struct NameEntry {
-//     #[br(align_after = self.name.length() - length)]
-//     pub name: NullString
-// }
-
 #[binrw]
 #[br(little, import(file_count: u32))]
 pub struct NameTable {
@@ -70,10 +56,6 @@ pub struct NameTable {
     #[br(align_after = 4)]
     #[br(args(file_count, longest_length), parse_with = parse_names)]
     pub names: Vec<NullString>
-
-    // #[br(align_after = 4)]
-    // #[br(args { count: file_count as usize, length: longest_length })]
-    // pub names: Vec<NameEntry>
 }
 
 #[binrw]
@@ -95,6 +77,7 @@ pub struct HashMap {
     pub file_indices: Vec<u16>
 }
 
+/// Header
 #[binrw]
 #[br(little)]
 pub struct DAT {
@@ -115,7 +98,6 @@ pub struct DAT {
     #[br(align_after = 16)]
     #[br(args(metadata.file_count))]
     pub hashmap: HashMap,
-
-    #[br(parse_with = parse_data)]
-    pub data: Vec<u8>
+    
+    // Rest is file data
 }

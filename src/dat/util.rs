@@ -37,8 +37,6 @@ fn parse_names<R: Read + Seek>(reader: &mut R, _ro: &ReadOptions, args: (u32, u3
 fn parse_data<R: Read + Seek>(reader: &mut R, _ro: &ReadOptions, _: ()) -> BinResult<Vec<u8>>
 {
     let mut data: Vec<u8> = Vec::new();
-    println!("bytes read: {}", reader.read_to_end(&mut data).unwrap());
-
     Ok(data)
 }
 

@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 binrw = "0.10.0"
+prettytable-rs = "0.10.0"

@@ -16,7 +16,7 @@ struct Config {
     
     /// Path to input file or directory
     #[arg(short, long)]
-    path: String,
+    input: String,
     
     /// Path to output file or directory (inside input dir or next to input file by default)
     #[arg(short, long)]
@@ -42,10 +42,10 @@ enum Action {
 
 fn main() {
     let config = Config::parse();
-    let input_path = Path::new(&config.path);
+    let input_path = Path::new(&config.input);
     let output_path: PathBuf;
 
-    // By default, 
+    // By default, output_path is the input_path
     match config.output {
         Some(path) => {
             output_path = PathBuf::from(path);
@@ -65,13 +65,11 @@ fn main() {
         }
     }
 
-    let file = File::open(config.path).unwrap_or_else(|error| {
+    let file = File::open(config.input).unwrap_or_else(|error| {
         panic!("Problem opening the input file: {:?}", error);
     });
 
     dat::unpack(file, &output_path, config.verbose).unwrap_or_else(|error| {
         panic!("Problem unpacking the input file: {:?}", error)
     });
-    
-    //println!("{}", config.output);
 }

@@ -78,10 +78,14 @@ pub fn unpack(mut f: File, o: &PathBuf, verbose: bool) -> Result<(), &'static st
             panic!("Problem reading data into buffer! {}", error)
         );
 
+        let file_name = header.name_table.names[n as usize].to_string();
+
+        if verbose { println!("Writing {} to {:?}...", file_name, o); }
+
         // Write buffer to new file
-        let mut output_name = o.clone();
-        output_name.push(header.name_table.names[n as usize].to_string());
-        let mut output = File::create(output_name).unwrap_or_else(|error| 
+        let mut output_path= o.clone();
+        output_path.push(file_name);
+        let mut output = File::create(output_path).unwrap_or_else(|error| 
             panic!("Problem creating output file! {}", error)
         );
         output.write(&data).unwrap_or_else(|error|

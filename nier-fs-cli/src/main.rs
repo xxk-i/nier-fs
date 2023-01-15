@@ -20,11 +20,12 @@ fn main() {
     let config = Config::parse();
     println!("{:#?}", config.path);
 
-    let file = File::open(config.path).unwrap_or_else(|error| {
+    let mut file = File::open(config.path).unwrap_or_else(|error| {
         panic!("Problem opening the input file: {:?}", error);
     });
 
     dat::unpack(file, &output_path).unwrap_or_else(|error| {
         panic!("Problem unpacking the input file: {:?}", error)
     });
+
 }

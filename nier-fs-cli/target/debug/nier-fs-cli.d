@@ -1,1 +1,0 @@
-/Users/grojdg/Developer/nier-fs/nier-fs-cli/target/debug/nier-fs-cli: /Users/grojdg/Developer/nier-fs/nier-fs-cli/src/main.rs /Users/grojdg/Developer/nier-fs/src/dat/mod.rs /Users/grojdg/Developer/nier-fs/src/lib.rs

@@ -1,4 +1,6 @@
-/target
-/Cargo.lock
+# nier-fs
+target/
+Cargo.lock
 .DS_Store
-/files
+files/
+.vscode/
